@@ -1,12 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/database/prismaService';
-import { TarefaDTO } from './dto/tarefa.dto';
 
 @Injectable()
 export class TarefasService {
     constructor(private prisma: PrismaService) {}
 
-    async criar(data: TarefaDTO) {
+    async criar(data: any): Promise<any> {
         try {
             const tarefa = await this.prisma.tarefa.create({data});
             return tarefa;
@@ -24,9 +23,9 @@ export class TarefasService {
         }
     }
 
-    async buscar(id: string): Promise<TarefaDTO> {
+    async buscar(id: string): Promise<any> {
         try {
-            const tarefa: TarefaDTO = await this.prisma.tarefa.findFirst({
+            const tarefa: any = await this.prisma.tarefa.findFirst({
                 where: {
                     id: id
                 }
@@ -45,7 +44,7 @@ export class TarefasService {
         }
     }
 
-    async atualizar(id: string, data: TarefaDTO): Promise<TarefaDTO> {
+    async atualizar(id: string, data: any): Promise<any> {
         try {
             const tarefa = await this.prisma.tarefa.findUnique({
                 where: {id}
@@ -65,7 +64,7 @@ export class TarefasService {
         }
     }
 
-    async deletar(id: string): Promise<TarefaDTO> {
+    async deletar(id: string): Promise<any> {
         try {
             const tarefa = await this.prisma.tarefa.findUnique({
                 where: {id}
