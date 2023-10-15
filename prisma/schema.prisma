@@ -11,10 +11,11 @@ datasource db {
 }
 
 model quadro {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   nome      String
   idUsuario String
   colunas   coluna[]
+  ususario  ususario? @relation(fields: [idUsuario], references: [id])
 
   @@map("quadros")
 }
@@ -39,4 +40,15 @@ model tarefa {
   coluna            coluna   @relation(fields: [idColuna], references: [id])
 
   @@map("tarefas")
+}
+
+model ususario {
+  id       String   @id @default(uuid())
+  nome     String
+  email    String   @unique
+  telefone String
+  senha    String
+  quadros  quadro[]
+
+  @@map("usuarios")
 }
