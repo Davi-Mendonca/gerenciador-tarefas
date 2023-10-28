@@ -15,7 +15,7 @@ model quadro {
   nome      String
   idUsuario String
   colunas   coluna[]
-  ususario  ususario? @relation(fields: [idUsuario], references: [id])
+  usuario  usuario? @relation(fields: [idUsuario], references: [id])
 
   @@map("quadros")
 }
@@ -42,7 +42,7 @@ model tarefa {
   @@map("tarefas")
 }
 
-model ususario {
+model usuario {
   id       String   @id @default(uuid())
   nome     String
   email    String   @unique

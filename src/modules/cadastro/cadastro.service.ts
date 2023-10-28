@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 const bcrypt = require('bcrypt');
 
@@ -7,16 +7,29 @@ export class CadastroService {
     constructor(private prisma: PrismaClient){}
 
     async cadastrar(data: any) {
-        if (data['senha']) {
+        if (!data) {
+            throw new HttpException('Parametros inválidos.', HttpStatus.BAD_REQUEST)
+        }
+
+        const email = data.email;
+        const result = this.prisma.usuario.findUnique({
+            where: {email}
+        })
+
+        if (result) {
+            throw new HttpException('Usuário já cadastrado.', HttpStatus.CONFLICT)
+        }
+
+        if (data.senha) {
             data.senha = await bcrypt.hash(data.senha, 15)
         }
-        const usuario = this.prisma.ususario.create({data});
+        const usuario = this.prisma.usuario.create({data});
 
         return usuario;
     }
 
     async buscarPorEmail(email: string) {
-        const usuario = this.prisma.ususario.findUnique({
+        const usuario = this.prisma.usuario.findUnique({
             where:{email}
         });
 
@@ -24,7 +37,7 @@ export class CadastroService {
     }
 
     async buscarQuadros(id: string) {
-        const usuario = this.prisma.ususario.findUnique({
+        const usuario = this.prisma.usuario.findUnique({
             where:{id},
             include:{
                 quadros: {
@@ -46,7 +59,7 @@ export class CadastroService {
         if (data['senha']) {
             data.senha = await bcrypt.hash(data.senha, 15)
         }
-        const usuario = this.prisma.ususario.update({
+        const usuario = this.prisma.usuario.update({
             data,
             where: {email}
         })
@@ -55,7 +68,7 @@ export class CadastroService {
     }
 
     async deletar(email: string) {
-        const usuario = this.prisma.ususario.delete({
+        const usuario = this.prisma.usuario.delete({
             where: {email}
         })
 

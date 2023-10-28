@@ -16,7 +16,7 @@ export class CadastroController {
   }
 
   @Delete()
-  deletarUsusario(@Body('email') email: string) {
+  deletarUsuario(@Body('email') email: string) {
     return this.service.deletar(email);
   }
 }

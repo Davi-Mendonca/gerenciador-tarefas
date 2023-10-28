@@ -8,7 +8,7 @@ import { QuadrosModule } from './modules/quadros/quadros.module';
 import { CadastroModule } from './modules/cadastro/cadastro.module';
 
 @Module({
-  imports: [LoginModule, TarefasModule, ColunasModule, QuadrosModule, CadastroModule],
+  imports: [LoginModule, TarefasModule, ColunasModule, QuadrosModule, CadastroModule,],
   controllers: [AppController],
   providers: [AppService],
 })
