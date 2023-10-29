@@ -13,7 +13,7 @@ export class LoginService {
   async login(email: string, senha: string) {
     const usuario = await this.cadastroService.buscarPorEmail(email);
 
-    if (!usuario) throw new HttpException('', HttpStatus.NO_CONTENT)
+    if (!usuario) throw new HttpException('Email não encontrado.', HttpStatus.NOT_FOUND)
 
     const result = await bcrypt.compare(senha, usuario.senha);
 
