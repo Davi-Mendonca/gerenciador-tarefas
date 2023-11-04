@@ -22,6 +22,8 @@ export class LoginService {
 
         return {
             id: response[ 'id'],
+            nome: response['nome'],
+            email: response['email'],
             quadros: response['quadros']
         }
     } else {

@@ -12,10 +12,10 @@ export class CadastroService {
         }
 
         const email = data.email;
-        const result = this.prisma.usuario.findUnique({
+        const result = await this.prisma.usuario.findUnique({
             where: {email}
         })
-
+        console.log('result: ', result)
         if (result) {
             throw new HttpException('Usuário já cadastrado.', HttpStatus.CONFLICT)
         }

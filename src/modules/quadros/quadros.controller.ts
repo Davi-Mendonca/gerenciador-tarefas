@@ -10,6 +10,11 @@ export class QuadrosController {
     return this.service.criar(data);
   }
 
+  @Get(':id')
+  buscarQuadro(@Param('id') id: string) {
+    return this.service.buscar(id);
+  }
+
   @Get()
   listarQuadros() {
     return this.service.listar();
