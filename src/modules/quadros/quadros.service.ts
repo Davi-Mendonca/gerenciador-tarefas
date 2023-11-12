@@ -32,6 +32,15 @@ export class QuadrosService {
             idQuadro: quadro.id
         })
 
+        if (quadro) {
+            return await this.prisma.quadro.findUnique({
+                where: {id: quadro.id},
+                include: {
+                    colunas: true
+                }
+            })
+        }
+
         return quadro;
     }
 

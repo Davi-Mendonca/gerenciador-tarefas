@@ -41,15 +41,27 @@ export class CadastroService {
             where:{id},
             include:{
                 quadros: {
+                    orderBy: {
+                        createdAt: 'asc', // ou 'desc' para descendente
+                    },
                     include: {
                         colunas: {
+                            orderBy: {
+                                createdAt: 'asc', // ou 'desc' para descendente
+                            },
                             include: {
-                                tarefas: true
+                                tarefas: {
+                                    orderBy: {
+                                        createdAt: 'asc', // ou 'desc' para descendente
+                                    },
+                                }
+                                
                             }
                         }
                     }
                 }
-            }
+            },
+            
         })
 
         return usuario;

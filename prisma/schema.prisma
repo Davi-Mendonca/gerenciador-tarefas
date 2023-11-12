@@ -12,6 +12,7 @@ datasource db {
 
 model quadro {
   id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
   nome      String
   idUsuario String
   colunas   coluna[]
@@ -22,6 +23,7 @@ model quadro {
 
 model coluna {
   id       String   @id @default(uuid())
+  createdAt DateTime  @default(now())
   nome     String
   idQuadro String
   tarefas  tarefa[]
@@ -32,6 +34,7 @@ model coluna {
 
 model tarefa {
   id                String   @id @default(uuid())
+  createdAt DateTime  @default(now())
   titulo            String
   descricao         String
   dataParaConclusao DateTime
@@ -44,6 +47,7 @@ model tarefa {
 
 model usuario {
   id       String   @id @default(uuid())
+  createdAt DateTime  @default(now())
   nome     String
   email    String   @unique
   telefone String
