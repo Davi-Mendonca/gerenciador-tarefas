@@ -19,4 +19,14 @@ export class QuadrosController {
   listarQuadros() {
     return this.service.listar();
   }
+
+  @Put(':id')
+  atualizarQuadro(@Param('id') id: string, @Body() data: any) {
+    return this.service.atualizar(id, data);
+  }
+
+  @Delete(':id')
+  deletarQuadro(@Param('id') id: string) {
+    return this.service.deletar(id);
+  }
 }

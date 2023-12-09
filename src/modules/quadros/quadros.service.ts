@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Put } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { ColunasService } from '../colunas/colunas.service';
 
@@ -69,5 +69,61 @@ export class QuadrosService {
         })
 
         return quadros;
+    }
+
+    async atualizar(id: string, data: any) {
+        const quadro = await this.prisma.quadro.findUnique({
+            where: {id}
+        });
+        if (!quadro) {
+            throw new HttpException(
+                '',
+                HttpStatus.NO_CONTENT
+            )
+        }
+        return await this.prisma.quadro.update({
+            data,
+            where: {id}
+        })
+    }
+
+    async deletar(id: string) {
+        const quadro = await this.prisma.quadro.findUnique({
+            where: {id},
+            include: {
+                colunas: {
+                    include: {
+                        tarefas: true
+                    }
+                }
+            }
+        });
+
+        if (!quadro) {
+            throw new HttpException(
+                '',
+                HttpStatus.NO_CONTENT
+            )
+        }
+
+        for (const coluna of quadro.colunas) {
+            await this.prisma.tarefa.deleteMany({
+                where: {
+                    idColuna: coluna.id
+                }
+            });
+        }
+
+        await this.prisma.coluna.deleteMany({
+            where: {
+                idQuadro: id
+            }
+        })
+
+        await this.prisma.quadro.delete({
+            where: {id: id}
+        })
+
+        return HttpStatus.OK
     }
 }

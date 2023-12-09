@@ -40,7 +40,6 @@ export class ColunasService {
         where: {id},
         include: { tarefas:true }
     })
-    console.log('tarefas: ', coluna['tarefas'])
     if (!coluna) {
         throw new HttpException(
             '',
