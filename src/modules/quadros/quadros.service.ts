@@ -36,7 +36,9 @@ export class QuadrosService {
             return await this.prisma.quadro.findUnique({
                 where: {id: quadro.id},
                 include: {
-                    colunas: true
+                    colunas: {
+                        orderBy: {createdAt : 'asc'}
+                    }
                 }
             })
         }

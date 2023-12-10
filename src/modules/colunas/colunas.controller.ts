@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Body,
-  Post,
-  Get,
-  Put,
-  Delete,
-  Param,
-} from '@nestjs/common';
+import { Controller, Body, Post, Get, Put, Delete, Param} from '@nestjs/common';
 import { ColunasService } from './colunas.service';
 
 @Controller('colunas')
